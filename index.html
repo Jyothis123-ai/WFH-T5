@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A pixel-perfect responsive clone of the Instagram landing page built with pure HTML and CSS. Includes interactive theme switching, form floating labels, image slideshow, and a post feed mockup.">
+  <meta name="keywords" content="Instagram, Clone, Landing Page, HTML, CSS, Responsive, Flexbox, Grid">
+  <title>Instagram</title>
+  <link rel="icon" type="image/x-icon" href="https://www.instagram.com/static/images/ico/favicon.ico/36b30c69fd35.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Theme Switcher Button -->
+  <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Dark Mode" title="Toggle Light/Dark Theme">
+    <!-- Sun icon (shown in dark mode to switch to light) -->
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <!-- Moon icon (shown in light mode to switch to dark) -->
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+
+  <div class="app-wrapper">
+
+    <!-- ==========================================================================
+         STATE 1: LOGGED-OUT LOGIN & SIGNUP VIEW
+         ========================================================================== -->
+    <main class="state-container active" id="logged-out-state">
+      <section class="auth-section">
+        <div class="auth-grid">
+          
+          <!-- Mobile App Preview (Left side) -->
+          <div class="preview-container">
+            <div class="phone-mockup">
+              <div class="slideshow-container" id="slideshow">
+                <img src="https://images.unsplash.com/photo-1611224885990-ab7363d1f2a9?w=400&auto=format&fit=crop&q=80" class="slide active" alt="Instagram screenshot feed layout">
+                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=400&auto=format&fit=crop&q=80" class="slide" alt="Instagram screenshot profile view">
+                <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=400&auto=format&fit=crop&q=80" class="slide" alt="Instagram screenshot messages window">
+                <img src="https://images.unsplash.com/photo-1502444330042-d1a1ddf9bb5b?w=400&auto=format&fit=crop&q=80" class="slide" alt="Instagram screenshot reels tab">
+              </div>
+            </div>
+          </div>
+
+          <!-- Auth Cards Container (Right side) -->
+          <div class="auth-forms-container">
+            
+            <!-- Login Form Card -->
+            <div class="auth-card">
+              <div class="logo-container">
+                <svg viewBox="0 0 840 300" aria-label="Instagram">
+                  <path d="M64.76 49.108c-16.2 6.785-34.03 25.955-39.66 50.017-7.128 30.487 22.534 43.38 24.967 39.152 2.863-4.967-5.315-6.647-7-22.465-2.176-20.43 7.322-43.26 19.276-53.276 2.222-1.86 2.116.73 2.116 5.52l-.473 101.53c0 21.72-.897 28.58-2.508 35.356-1.633 6.868-4.257 11.51-2.268 13.296 2.222 2 11.71-2.757 17.2-10.422 6.586-9.193 8.89-20.233 9.305-32.223.5-14.453.48-37.387.5-50.47l-.2-68.25c-.1-5.18-14.468-10.615-21.248-7.775m575.627 101.653c-.523 11.292-3.022 20.117-6.124 26.343-6.005 12.052-18.467 15.794-23.758-1.53-2.883-9.444-3.018-25.216-.945-38.395 2.1-13.425 8.002-23.565 17.76-22.65 9.623.904 14.128 13.304 13.068 36.233zM478.15 220.81c-.13 18.762-3.083 35.212-9.415 40-8.98 6.775-21.052 1.693-18.552-11.998 2.212-12.115 12.67-24.487 27.993-39.604l-.025 11.612zm-2.453-70.165c-.55 10.284-3.215 20.616-6.124 26.454-6.004 12.052-18.556 15.82-23.758-1.53-3.557-11.855-2.705-27.198-.945-36.865 2.284-12.543 7.82-24.18 17.76-24.18 9.665 0 14.43 10.603 13.068 36.122zm-93.983-.157c-.59 10.892-2.714 19.998-6.124 26.61-6.17 11.97-18.375 15.765-23.758-1.53-3.88-12.472-2.56-29.477-.945-38.663 2.396-13.632 8.394-23.297 17.76-22.38 9.62.94 14.296 13.303 13.068 35.965zM812.42 163.21c-2.352 0-3.425 2.424-4.312 6.504-3.08 14.187-6.316 17.4-10.5 17.4-4.663 0-8.853-7.025-9.93-21.087-.846-11.057-.71-31.414.372-51.663.22-4.16-.927-8.277-12.086-12.33-4.802-1.744-11.782-4.31-15.257 4.078-9.82 23.7-13.66 42.517-14.565 50.16-.047.396-.532.476-.617-.448-.576-6.122-1.864-17.247-2.024-40.622-.03-4.56-.997-8.442-6.03-11.62-3.266-2.062-13.184-5.71-16.755-1.37-3.094 3.55-6.677 13.1-10.4 24.42l-5.134 15.425.076-34.243c.016-3.553-2.42-4.736-3.155-4.95-3.307-.96-9.823-2.564-12.6-2.564-3.413 0-4.248 1.908-4.248 4.687l-.54 55.287.01 3.19c-1.888 10.388-8.01 24.49-14.667 24.49-6.665 0-9.8-5.895-9.8-32.84 0-15.718.472-22.553.704-33.92l.38-12.718c-.05-3.5-6.1-5.263-8.916-5.915-2.83-.657-5.287-.912-7.207-.803-2.717.153-4.64 1.936-4.64 4.387l.015 3.814c-3.5-5.5-9.127-9.326-12.872-10.435-10.086-2.995-20.61-.34-28.55 10.767-6.31 8.826-10.113 18.823-11.6 33.186-1.094 10.5-.737 21.148 1.208 30.153-2.35 10.16-6.713 14.324-11.49 14.324-6.936 0-11.964-11.32-11.38-30.9.385-12.878 2.962-21.916 5.78-34.99 1.2-5.574.225-8.492-2.222-11.288-2.245-2.565-7.028-3.875-13.904-2.263-4.898 1.15-11.9 2.385-18.307 3.334 0 0 .387-1.542.704-4.262 1.666-14.26-13.83-13.104-18.775-8.55-2.95 2.72-4.96 5.927-5.723 11.694-1.21 9.152 6.255 13.468 6.255 13.468-2.45 11.2-8.452 25.854-14.65 36.44-3.32 5.672-5.86 9.876-9.137 14.344l-.027-4.983.377-48.8.383-12.584c-.037-2.56-1.532-3.526-4.64-4.75-2.75-1.082-6-1.832-9.37-2.093-4.255-.332-6.82 1.925-6.752 4.594.013.504.013 3.598.013 3.598-3.5-5.5-9.128-9.326-12.872-10.435-10.086-2.994-20.61-.34-28.55 10.767-6.308 8.826-10.44 21.212-11.6 33.076-1.1 11.058-.89 20.455.597 28.37-1.604 7.927-6.215 16.216-11.428 16.216-6.665 0-10.458-5.895-10.458-32.84 0-15.718.472-22.553.704-33.92l.38-12.718c-.05-3.5-6.1-5.263-8.916-5.916-2.946-.68-5.5-.932-7.443-.788-2.577.192-4.39 2.5-4.39 4.22v3.966c-3.5-5.5-9.127-9.326-12.872-10.435-10.086-2.994-20.552-.297-28.55 10.767-5.215 7.215-9.437 15.213-11.6 32.92-.628 5.117-.905 9.908-.87 14.387-2.08 12.718-11.264 27.376-18.778 27.376-4.397 0-8.584-8.528-8.584-26.702 0-24.21 1.498-58.677 1.752-62l11.33-.183c4.735-.052 9.024.06 15.33-.263 3.163-.16 6.21-11.514 2.946-12.92-1.48-.636-11.938-1.193-16.084-1.28-3.486-.08-13.19-.797-13.19-.797l1.073-25.295c.172-2.014-2.434-3.05-3.93-3.68-3.634-1.537-6.885-2.273-10.74-3.067-5.324-1.098-7.74-.024-8.212 4.47-.7 6.82-1.08 26.796-1.08 26.796-3.907 0-17.254-.764-21.162-.764-3.63 0-7.55 15.617-2.53 15.81l22.516.62-.285 49.187c-3.673 19.143-16.61 29.484-16.61 29.484 2.778-12.664-2.897-22.174-13.12-30.225-3.766-2.967-11.2-8.583-19.52-14.737 0 0 4.818-4.748 9.1-14.3 3.027-6.767 3.158-14.51-4.272-16.218-12.278-2.823-22.4 6.193-25.42 15.82-2.34 7.457-1.092 12.99 3.49 18.74.335.42.697.85 1.072 1.28-2.772 5.342-6.58 12.534-9.803 18.11-8.95 15.485-15.712 27.733-20.82 27.733-4.085 0-4.03-12.435-4.03-24.078 0-10.037.74-25.127 1.333-40.75.196-5.167-2.388-8.11-6.72-10.777-2.63-1.62-8.248-4.804-11.5-4.804-4.87 0-18.915.662-32.187 39.054-1.673 4.84-4.96 13.656-4.96 13.656l.283-46.167c0-1.082-.576-2.13-1.897-2.845-2.236-1.214-8.2-3.698-13.52-3.698-2.53 0-3.794 1.177-3.794 3.523l-.463 72.23c0 5.488.143 11.9.686 14.69s1.416 5.084 2.5 6.44 2.336 2.388 4.402 2.814c1.923.396 12.45 1.748 12.998-2.275.656-4.82.68-10.037 6.21-29.486 8.606-30.28 19.827-45.055 25.102-50.302.922-.917 1.975-.972 1.925.53l-1.55 37.32c-1.43 37.715 5.432 44.706 15.237 44.706 7.5 0 18.075-7.453 29.4-26.32l18.858-31.595 11.143 10.26c8.953 8.497 11.892 16.572 9.942 24.23-1.492 5.856-7.11 11.9-17.107 6.025-2.914-1.71-4.158-3.033-7.088-4.963-1.574-1.036-3.978-1.346-5.42-.26-3.743 2.822-5.884 6.412-7.107 10.857-1.19 4.325 3.142 6.61 7.632 8.6 3.866 1.72 12.175 3.28 17.474 3.458 20.647.7 37.186-9.97 48.7-37.465 2.06 23.746 10.833 37.184 26.072 37.184 10.19 0 20.404-13.17 24.87-26.126 1.282 5.28 3.18 9.874 5.632 13.757 11.743 18.606 34.524 14.6 45.967-1.198 3.538-4.882 4.077-6.636 4.077-6.636 1.67 14.918 13.683 20.13 20.56 20.13 7.704 0 15.658-3.642 21.233-16.193.653 1.362 1.366 2.663 2.145 3.896 11.743 18.606 34.524 14.6 45.967-1.198a72.9 72.9 0 0 0 1.417-2.017l.336 9.8-10.535 9.662c-17.637 16.18-31.047 28.457-32.034 42.753-1.266 18.23 13.517 25.003 24.702 25.89 11.878.943 22.05-5.62 28.3-14.8 5.5-8.082 9.098-25.478 8.834-42.658l-.415-25.004c6.2-7.2 13.183-16.297 19.614-26.947 7.008-11.606 14.52-27.192 18.364-39.322 0 0 6.525.056 13.49-.4 2.228-.145 2.867.31 2.456 1.942-.497 1.973-8.798 33.99-1.223 55.32 5.186 14.6 16.875 19.3 23.806 19.3 8.113 0 15.874-6.127 20.033-15.225.5 1.014 1.025 1.996 1.597 2.902 11.743 18.606 34.444 14.577 45.967-1.198 2.6-3.56 4.077-6.636 4.077-6.636 2.473 15.44 14.48 20.21 21.357 20.21 7.164 0 13.963-2.937 19.48-15.99.23 5.747.593 10.446 1.166 11.927.35.906 2.385 2.043 3.866 2.593 6.553 2.43 13.237 1.28 15.7.78 1.713-.347 3.05-1.72 3.23-5.27.48-9.318.185-24.974 3-36.61 4.742-19.527 9.165-27.1 11.263-30.85 1.174-2.1 2.5-2.448 2.548-.224.1 4.5.323 17.71 2.16 35.463 1.35 13.055 3.15 20.772 4.536 23.214 3.953 6.984 8.834 7.315 12.8 7.315 2.53 0 7.817-.7 7.344-5.143-.23-2.166.173-15.554 4.848-34.792 3.053-12.563 8.142-23.914 9.978-28.064.677-1.53.992-.324.98-.09-.387 8.652-1.254 36.95 2.27 52.427 4.778 20.967 18.6 23.313 23.415 23.313 10.282 0 18.69-7.82 21.524-28.4.683-4.953-.328-8.777-3.355-8.777" fill="currentColor"/>
+                </svg>
+              </div>
+
+              <!-- Interactive Form -->
+              <form class="login-form" id="login-form" autocomplete="on">
+                <div class="input-wrapper" id="username-wrapper">
+                  <input type="text" id="login-username" name="username" required placeholder=" " autocomplete="username">
+                  <label for="login-username">Phone number, username, or email</label>
+                </div>
+                
+                <div class="input-wrapper" id="password-wrapper">
+                  <input type="password" id="login-password" name="password" required placeholder=" " autocomplete="current-password">
+                  <label for="login-password">Password</label>
+                  <span class="password-toggle" id="toggle-password" role="button" aria-label="Toggle Password Visibility">Show</span>
+                </div>
+
+                <button type="submit" class="btn-primary" id="login-btn" disabled>
+                  <span class="spinner" id="login-spinner"></span>
+                  <span class="btn-text">Log in</span>
+                </button>
+
+                <div class="divider">
+                  <span>or</span>
+                </div>
+
+                <a href="#" class="fb-login">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z"/>
+                  </svg>
+                  Log in with Facebook
+                </a>
+
+                <a href="#" class="forgot-password">Forgot password?</a>
+              </form>
+            </div>
+
+            <!-- Sign Up Redirect Card -->
+            <div class="auth-card redirect-card">
+              <p>Don't have an account? <a href="#" id="signup-link">Sign up</a></p>
+            </div>
+
+            <!-- Get App Badge Container -->
+            <div class="get-app-container">
+              <p>Get the app.</p>
+              <div class="badge-wrapper">
+                <a href="https://apps.apple.com/app/instagram/id389801252" target="_blank" rel="noopener noreferrer" class="app-badge">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.instagram.android" target="_blank" rel="noopener noreferrer" class="app-badge">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </main>
+
+
+    <!-- ==========================================================================
+         STATE 2: LOGGED-IN FEED VIEW WITH NAVIGATION BAR & SIDEBAR
+         ========================================================================== -->
+    <div class="state-container" id="logged-in-state">
+      <div class="feed-section-container">
+        
+        <!-- 1. SIDE NAVIGATION BAR (Visible on Desktop / Tablet) -->
+        <aside class="side-nav">
+          <div class="side-nav-top">
+            <a href="#" class="side-nav-logo">
+              <!-- Full Wordmark logo -->
+              <svg class="insta-logo" viewBox="0 0 175 51">
+                <path d="M12.2,50.2c-2.3,0-4.3-0.5-6.1-1.6s-3.2-2.7-4.1-4.7C1.1,41.8,0.7,39.3,0.7,36.5c0-2.8,0.5-5.3,1.5-7.5c1-2.1,2.4-3.8,4.1-5c1.8-1.2,3.8-1.8,6-1.8c2.4,0,4.4,0.6,6.1,1.8c1.7,1.2,3,2.8,3.9,4.9c0.9,2.1,1.4,4.6,1.4,7.4c0,2.8-0.5,5.3-1.4,7.5c-0.9,2.2-2.3,3.9-4,5.1C16.6,49.6,14.6,50.2,12.2,50.2 M12.2,45.8c1.5,0,2.8-0.4,3.9-1.3c1.1-0.9,1.9-2.2,2.4-3.8c0.5-1.7,0.8-3.6,0.8-5.9c0-2.2-0.2-4.1-0.7-5.8c-0.5-1.7-1.3-3-2.4-3.9s-2.4-1.3-3.9-1.3c-1.5,0-2.8,0.4-3.9,1.3c-1.1,0.9-1.9,2.2-2.4,3.8c-0.5,1.7-0.7,3.6-0.7,5.9c0,2.2,0.2,4.1,0.7,5.8c0.5,1.7,1.3,3,2.4,3.9C9.4,45.4,10.7,45.8,12.2,45.8 M27.8,23c1.5-0.6,3.3-0.9,5.5-0.9c2,0,3.7,0.3,5.2,0.9v4.2c-1.6-0.8-3.2-1.1-5-1.1c-1.6,0-2.9,0.4-3.8,1.2c-0.9,0.8-1.4,2.2-1.4,4.2v17.4h-5.2V22.9h4.3V23H27.8z M46.6,50.2c-2.3,0-4.3-0.5-6.1-1.6s-3.2-2.7-4.1-4.7c-0.9-2.1-1.4-4.6-1.4-7.4c0-2.8,0.5-5.3,1.5-7.5c1-2.1,2.4-3.8,4.1-5c1.8-1.2,3.8-1.8,6-1.8c2.4,0,4.4,0.6,6.1,1.8c1.7,1.2,3,2.8,3.9,4.9c0.9,2.1,1.4,4.6,1.4,7.4c0,2.8-0.5,5.3-1.4,7.5c-0.9,2.2-2.3,3.9-4,5.1C51.1,49.6,49.1,50.2,46.6,50.2 M46.6,45.8c1.5,0,2.8-0.4,3.9-1.3c1.1-0.9,1.9-2.2,2.4-3.8c0.5-1.7,0.8-3.6,0.8-5.9c0-2.2-0.2-4.1-0.7-5.8c-0.5-1.7-1.3-3-2.4-3.9s-2.4-1.3-3.9-1.3c-1.5,0-2.8,0.4-3.9,1.3c-1.1,0.9-1.9,2.2-2.4,3.8c-0.5,1.7-0.7,3.6-0.7,5.9c0,2.2,0.2,4.1,0.7,5.8c0.5,1.7,1.3,3,2.4,3.9C43.8,45.4,45.1,45.8,46.6,45.8 M67.5,50.2c-2.3,0-4.3-0.5-6.1-1.6s-3.2-2.7-4.1-4.7C56.4,41.8,56,39.3,56,36.5c0-2.8,0.5-5.3,1.5-7.5c1-2.1,2.4-3.8,4.1-5c1.8-1.2,3.8-1.8,6-1.8c2.4,0,4.4,0.6,6.1,1.8c1.7,1.2,3,2.8,3.9,4.9c0.9,2.1,1.4,4.6,1.4,7.4c0,2.8-0.5,5.3-1.4,7.5c-0.9,2.2-2.3,3.9-4,5.1C72,49.6,70,50.2,67.5,50.2 M67.5,45.8c1.5,0,2.8-0.4,3.9-1.3c1.1-0.9,1.9-2.2,2.4-3.8c0.5-1.7,0.8-3.6,0.8-5.9c0-2.2-0.2-4.1-0.7-5.8c-0.5-1.7-1.3-3-2.4-3.9s-2.4-1.3-3.9-1.3c-1.5,0-2.8,0.4-3.9,1.3c-1.1,0.9-1.9,2.2-2.4,3.8c-0.5,1.7-0.7,3.6-0.7,5.9c0,2.2,0.2,4.1,0.7,5.8c0.5,1.7,1.3,3,2.4,3.9C64.7,45.4,66,45.8,67.5,45.8 M92,23c1.5-0.6,3.3-0.9,5.5-0.9c2,0,3.7,0.3,5.2,0.9v4.2c-1.6-0.8-3.2-1.1-5-1.1c-1.6,0-2.9,0.4-3.8,1.2c-0.9,0.8-1.4,2.2-1.4,4.2v17.4h-5.2V22.9H92V23h0V23z M112.5,50.2c-2.3,0-4.3-0.5-6.1-1.6s-3.2-2.7-4.1-4.7c-0.9-2.1-1.4-4.6-1.4-7.4c0-2.8,0.5-5.3,1.5-7.5c1-2.1,2.4-3.8,4.1-5c1.8-1.2,3.8-1.8,6-1.8c2.4,0,4.4,0.6,6.1,1.8c1.7,1.2,3,2.8,3.9,4.9c0.9,2.1,1.4,4.6,1.4,7.4c0,2.8-0.5,5.3-1.4,7.5c-0.9,2.2-2.3,3.9-4,5.1C117,49.6,115,50.2,112.5,50.2 M112.5,45.8c1.5,0,2.8-0.4,3.9-1.3c1.1-0.9,1.9-2.2,2.4-3.8c0.5-1.7,0.8-3.6,0.8-5.9c0-2.2-0.2-4.1-0.7-5.8c-0.5-1.7-1.3-3-2.4-3.9s-2.4-1.3-3.9-1.3c-1.5,0-2.8,0.4-3.9,1.3c-1.1,0.9-1.9,2.2-2.4,3.8c-0.5,1.7-0.7,3.6-0.7,5.9c0,2.2,0.2,4.1,0.7,5.8c0.5,1.7,1.3,3,2.4,3.9C109.7,45.4,111,45.8,112.5,45.8 M132.8,22.2c1.9,0,3.6,0.5,5.1,1.4c1.5,0.9,2.6,2.2,3.2,3.9l-4.7,2.1c-0.5-1.1-1.1-1.9-1.8-2.4c-0.7-0.5-1.5-0.7-2.4-0.7c-1.2,0-2.2,0.4-3.1,1.3c-0.9,0.9-1.3,2.2-1.3,4c0,1.8,0.4,3.1,1.3,4c0.9,0.9,2,1.3,3.3,1.3c1.2,0,2.2-0.3,3.1-1c0.9-0.7,1.5-1.7,1.8-3.1H132v-4.4h10.9c0.1,0.5,0.1,1,0.1,1.6c0,2.5-0.7,4.8-2.1,6.8c-1.4,2-3.6,3-6.6,3c-2.3,0-4.3-0.5-6.1-1.6c-1.8-1.1-3.2-2.7-4.1-4.7c-0.9-2.1-1.4-4.5-1.4-7.4c0-2.8,0.5-5.3,1.5-7.5c1-2.1,2.4-3.8,4.1-5C127.3,22.8,129.7,22.2,132.8,22.2 M153,50.2c-2.3,0-4.3-0.5-6.1-1.6s-3.2-2.7-4.1-4.7c-0.9-2.1-1.4-4.6-1.4-7.4c0-2.8,0.5-5.3,1.5-7.5c1-2.1,2.4-3.8,4.1-5c1.8-1.2,3.8-1.8,6-1.8c2.4,0,4.4,0.6,6.1,1.8c1.7,1.2,3,2.8,3.9,4.9c0.9,2.1,1.4,4.6,1.4,7.4c0,2.8-0.5,5.3-1.4,7.5c-0.9,2.2-2.3,3.9-4,5.1C157.5,49.6,155.5,50.2,153,50.2 M153,45.8c1.5,0,2.8-0.4,3.9-1.3c1.1-0.9,1.9-2.2,2.4-3.8c0.5-1.7,0.8-3.6,0.8-5.9c0-2.2-0.2-4.1-0.7-5.8c-0.5-1.7-1.3-3-2.4-3.9s-2.4-1.3-3.9-1.3c-1.5,0-2.8,0.4-3.9,1.3c-1.1,0.9-1.9,2.2-2.4,3.8c-0.5,1.7-0.7,3.6-0.7,5.9c0,2.2,0.2,4.1,0.7,5.8c0.5,1.7,1.3,3,2.4,3.9C150.2,45.4,151.5,45.8,153,45.8 M172.9,23c1.5-0.6,3.3-0.9,5.5-0.9c2,0,3.7,0.3,5.2,0.9v4.2c-1.6-0.8-3.2-1.1-5-1.1c-1.6,0-2.9,0.4-3.8,1.2c-0.9,0.8-1.4,2.2-1.4,4.2v17.4h-5.2V22.9h4.3V23H172.9z"/>
+              </svg>
+              <!-- Small Camera Glyph logo (visible on Tablet mode) -->
+              <svg class="insta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+          </div>
+
+          <nav class="nav-menu">
+            <a href="#" class="nav-item active">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9.005 16.545a2.997 2.997 0 0 1 2.997-2.997h.001a2.997 2.997 0 0 1 2.997 2.997v5.455H9.005v-5.455zM21 22.002V12c0-.528-.21-.99-.582-1.353l-7.5-7.5a1.205 1.205 0 0 0-1.705 0l-7.5 7.5C3.336 11 3.126 11.472 3.126 12v10.002H7.5V16.54c0-2.483 2.012-4.495 4.495-4.495h.01a4.495 4.495 0 0 1 4.495 4.495v5.462H21z"/>
+              </svg>
+              <span>Home</span>
+            </a>
+            
+            <a href="#" class="nav-item">
+              <svg viewBox="0 0 24 24">
+                <path d="M19 10.5A8.5 8.5 0 1 1 10.5 2a8.5 8.5 0 0 1 8.5 8.5z" stroke-width="2"/>
+                <line x1="16.5" y1="16.5" x2="22" y2="22" stroke-width="2"/>
+              </svg>
+              <span>Search</span>
+            </a>
+
+            <a href="#" class="nav-item">
+              <svg viewBox="0 0 24 24">
+                <polygon points="12 2 2 22 22 22" stroke-width="2" stroke-linejoin="round"/>
+                <circle cx="12" cy="14" r="3" stroke-width="2"/>
+              </svg>
+              <span>Explore</span>
+            </a>
+
+            <a href="#" class="nav-item">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke-width="2"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2"/>
+              </svg>
+              <span>Reels</span>
+            </a>
+
+            <a href="#" class="nav-item">
+              <svg viewBox="0 0 24 24">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke-width="2"/>
+              </svg>
+              <span>Messages</span>
+            </a>
+
+            <a href="#" class="nav-item">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-width="2"/>
+              </svg>
+              <span>Notifications</span>
+            </a>
+
+            <a href="#" class="nav-item">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+                <line x1="12" y1="8" x2="12" y2="16" stroke-width="2"/>
+                <line x1="8" y1="12" x2="16" y2="12" stroke-width="2"/>
+              </svg>
+              <span>Create</span>
+            </a>
+
+            <a href="#" class="nav-item">
+              <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" class="user-avatar" alt="My Profile">
+              <span>Profile</span>
+            </a>
+          </nav>
+
+          <div class="side-nav-bottom">
+            <a href="#" class="nav-item" id="logout-link">
+              <svg viewBox="0 0 24 24">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke-width="2" stroke-linecap="round"/>
+                <polyline points="16 17 21 12 16 7" stroke-width="2" stroke-linecap="round"/>
+                <line x1="21" y1="12" x2="9" y2="12" stroke-width="2"/>
+              </svg>
+              <span>Log Out</span>
+            </a>
+          </div>
+        </aside>
+
+        <!-- 2. MOBILE TOP NAVIGATION BAR (Visible on Mobile only) -->
+        <header class="mobile-top-nav">
+          <a href="#" class="mobile-top-logo">
+            <svg viewBox="0 0 175 51">
+              <path d="M12.2,50.2c-2.3,0-4.3-0.5-6.1-1.6s-3.2-2.7-4.1-4.7C1.1,41.8,0.7,39.3,0.7,36.5c0-2.8,0.5-5.3,1.5-7.5c1-2.1,2.4-3.8,4.1-5c1.8-1.2,3.8-1.8,6-1.8c2.4,0,4.4,0.6,6.1,1.8c1.7,1.2,3,2.8,3.9,4.9c0.9,2.1,1.4,4.6,1.4,7.4c0,2.8-0.5,5.3-1.4,7.5c-0.9,2.2-2.3,3.9-4,5.1C16.6,49.6,14.6,50.2,12.2,50.2 M12.2,45.8c1.5,0,2.8-0.4,3.9-1.3c1.1-0.9,1.9-2.2,2.4-3.8c0.5-1.7,0.8-3.6,0.8-5.9c0-2.2-0.2-4.1-0.7-5.8c-0.5-1.7-1.3-3-2.4-3.9s-2.4-1.3-3.9-1.3c-1.5,0-2.8,0.4-3.9,1.3c-1.1,0.9-1.9,2.2-2.4,3.8c-0.5,1.7-0.7,3.6-0.7,5.9c0,2.2,0.2,4.1,0.7,5.8c0.5,1.7,1.3,3,2.4,3.9C9.4,45.4,10.7,45.8,12.2,45.8 M27.8,23c1.5-0.6,3.3-0.9,5.5-0.9c2,0,3.7,0.3,5.2,0.9v4.2c-1.6-0.8-3.2-1.1-5-1.1c-1.6,0-2.9,0.4-3.8,1.2c-0.9,0.8-1.4,2.2-1.4,4.2v17.4h-5.2V22.9h4.3V23H27.8z M46.6,50.2c-2.3,0-4.3-0.5-6.1-1.6s-3.2-2.7-4.1-4.7c-0.9-2.1-1.4-4.6-1.4-7.4c0-2.8,0.5-5.3,1.5-7.5c1-2.1,2.4-3.8,4.1-5c1.8-1.2,3.8-1.8,6-1.8c2.4,0,4.4,0.6,6.1,1.8c1.7,1.2,3,2.8,3.9,4.9c0.9,2.1,1.4,4.6,1.4,7.4c0,2.8-0.5,5.3-1.4,7.5c-0.9,2.2-2.3,3.9-4,5.1C51.1,49.6,49.1,50.2,46.6,50.2 M46.6,45.8c1.5,0,2.8-0.4,3.9-1.3c1.1-0.9,1.9-2.2,2.4-3.8c0.5-1.7,0.8-3.6,0.8-5.9c0-2.2-0.2-4.1-0.7-5.8c-0.5-1.7-1.3-3-2.4-3.9s-2.4-1.3-3.9-1.3c-1.5,0-2.8,0.4-3.9,1.3c-1.1,0.9-1.9,2.2-2.4,3.8c-0.5,1.7-0.7,3.6-0.7,5.9c0,2.2,0.2,4.1,0.7,5.8c0.5,1.7,1.3,3,2.4,3.9C43.8,45.4,45.1,45.8,46.6,45.8 M67.5,50.2c-2.3,0-4.3-0.5-6.1-1.6s-3.2-2.7-4.1-4.7C56.4,41.8,56,39.3,56,36.5c0-2.8,0.5-5.3,1.5-7.5c1-2.1,2.4-3.8,4.1-5c1.8-1.2,3.8-1.8,6-1.8c2.4,0,4.4,0.6,6.1,1.8c1.7,1.2,3,2.8,3.9,4.9c0.9,2.1,1.4,4.6,1.4,7.4c0,2.8-0.5,5.3-1.4,7.5c-0.9,2.2-2.3,3.9-4,5.1C72,49.6,70,50.2,67.5,50.2 M67.5,45.8c1.5,0,2.8-0.4,3.9-1.3c1.1-0.9,1.9-2.2,2.4-3.8c0.5-1.7,0.8-3.6,0.8-5.9c0-2.2-0.2-4.1-0.7-5.8c-0.5-1.7-1.3-3-2.4-3.9s-2.4-1.3-3.9-1.3c-1.5,0-2.8,0.4-3.9,1.3c-1.1,0.9-1.9,2.2-2.4,3.8c-0.5,1.7-0.7,3.6-0.7,5.9c0,2.2,0.2,4.1,0.7,5.8c0.5,1.7,1.3,3,2.4,3.9C64.7,45.4,66,45.8,67.5,45.8 M92,23c1.5-0.6,3.3-0.9,5.5-0.9c2,0,3.7,0.3,5.2,0.9v4.2c-1.6-0.8-3.2-1.1-5-1.1c-1.6,0-2.9,0.4-3.8,1.2c-0.9,0.8-1.4,2.2-1.4,4.2v17.4h-5.2V22.9H92V23h0V23z M112.5,50.2c-2.3,0-4.3-0.5-6.1-1.6s-3.2-2.7-4.1-4.7c-0.9-2.1-1.4-4.6-1.4-7.4c0-2.8,0.5-5.3,1.5-7.5c1-2.1,2.4-3.8,4.1-5c1.8-1.2,3.8-1.8,6-1.8c2.4,0,4.4,0.6,6.1,1.8c1.7,1.2,3,2.8,3.9,4.9c0.9,2.1,1.4,4.6,1.4,7.4c0,2.8-0.5,5.3-1.4,7.5c-0.9,2.2-2.3,3.9-4,5.1C117,49.6,115,50.2,112.5,50.2 M112.5,45.8c1.5,0,2.8-0.4,3.9-1.3c1.1-0.9,1.9-2.2,2.4-3.8c0.5-1.7,0.8-3.6,0.8-5.9c0-2.2-0.2-4.1-0.7-5.8c-0.5-1.7-1.3-3-2.4-3.9s-2.4-1.3-3.9-1.3c-1.5,0-2.8,0.4-3.9,1.3c-1.1,0.9-1.9,2.2-2.4,3.8c-0.5,1.7-0.7,3.6-0.7,5.9c0,2.2,0.2,4.1,0.7,5.8c0.5,1.7,1.3,3,2.4,3.9C109.7,45.4,111,45.8,112.5,45.8 M132.8,22.2c1.9,0,3.6,0.5,5.1,1.4c1.5,0.9,2.6,2.2,3.2,3.9l-4.7,2.1c-0.5-1.1-1.1-1.9-1.8-2.4c-0.7-0.5-1.5-0.7-2.4-0.7c-1.2,0-2.2,0.4-3.1,1.3c-0.9,0.9-1.3,2.2-1.3,4c0,1.8,0.4,3.1,1.3,4c0.9,0.9,2,1.3,3.3,1.3c1.2,0,2.2-0.3,3.1-1c0.9-0.7,1.5-1.7,1.8-3.1H132v-4.4h10.9c0.1,0.5,0.1,1,0.1,1.6c0,2.5-0.7,4.8-2.1,6.8c-1.4,2-3.6,3-6.6,3c-2.3,0-4.3-0.5-6.1-1.6c-1.8-1.1-3.2-2.7-4.1-4.7c-0.9-2.1-1.4-4.5-1.4-7.4c0-2.8,0.5-5.3,1.5-7.5c1-2.1,2.4-3.8,4.1-5C127.3,22.8,129.7,22.2,132.8,22.2 M153,50.2c-2.3,0-4.3-0.5-6.1-1.6s-3.2-2.7-4.1-4.7c-0.9-2.1-1.4-4.6-1.4-7.4c0-2.8,0.5-5.3,1.5-7.5c1-2.1,2.4-3.8,4.1-5c1.8-1.2,3.8-1.8,6-1.8c2.4,0,4.4,0.6,6.1,1.8c1.7,1.2,3,2.8,3.9,4.9c0.9,2.1,1.4,4.6,1.4,7.4c0,2.8-0.5,5.3-1.4,7.5c-0.9,2.2-2.3,3.9-4,5.1C157.5,49.6,155.5,50.2,153,50.2 M153,45.8c1.5,0,2.8-0.4,3.9-1.3c1.1-0.9,1.9-2.2,2.4-3.8c0.5-1.7,0.8-3.6,0.8-5.9c0-2.2-0.2-4.1-0.7-5.8c-0.5-1.7-1.3-3-2.4-3.9s-2.4-1.3-3.9-1.3c-1.5,0-2.8,0.4-3.9,1.3c-1.1,0.9-1.9,2.2-2.4,3.8c-0.5,1.7-0.7,3.6-0.7,5.9c0,2.2,0.2,4.1,0.7,5.8c0.5,1.7,1.3,3,2.4,3.9C150.2,45.4,151.5,45.8,153,45.8 M172.9,23c1.5-0.6,3.3-0.9,5.5-0.9c2,0,3.7,0.3,5.2,0.9v4.2c-1.6-0.8-3.2-1.1-5-1.1c-1.6,0-2.9,0.4-3.8,1.2c-0.9,0.8-1.4,2.2-1.4,4.2v17.4h-5.2V22.9h4.3V23H172.9z"/>
+            </svg>
+          </a>
+          <div class="mobile-top-icons">
+            <a href="#">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </a>
+            <a href="#">
+              <svg viewBox="0 0 24 24">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+              </svg>
+            </a>
+          </div>
+        </header>
+
+        <!-- 3. MAIN CONTENT SCENE -->
+        <div class="feed-content-wrapper">
+          <div class="feed-grid">
+            
+            <!-- Feed Main (Stories & Posts) -->
+            <main class="main-feed">
+              
+              <!-- Stories Slider Section -->
+              <section class="stories-panel">
+                <div class="story-item">
+                  <div class="story-avatar-container">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80" alt="sarah_jones">
+                  </div>
+                  <span class="story-username">sarah_jones</span>
+                </div>
+                
+                <div class="story-item">
+                  <div class="story-avatar-container">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" alt="travel_dan">
+                  </div>
+                  <span class="story-username">travel_dan</span>
+                </div>
+
+                <div class="story-item">
+                  <div class="story-avatar-container">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80" alt="chef_marie">
+                  </div>
+                  <span class="story-username">chef_marie</span>
+                </div>
+
+                <div class="story-item">
+                  <div class="story-avatar-container">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80" alt="alex_adventurer">
+                  </div>
+                  <span class="story-username">alex_adv...</span>
+                </div>
+
+                <div class="story-item">
+                  <div class="story-avatar-container">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&auto=format&fit=crop&q=80" alt="nature_lens">
+                  </div>
+                  <span class="story-username">nature_lens</span>
+                </div>
+
+                <div class="story-item">
+                  <div class="story-avatar-container">
+                    <img src="https://images.unsplash.com/photo-1489980508314-941910ded1f4?w=150&auto=format&fit=crop&q=80" alt="james_builds">
+                  </div>
+                  <span class="story-username">james_builds</span>
+                </div>
+                
+                <div class="story-item">
+                  <div class="story-avatar-container">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80" alt="chloe_reads">
+                  </div>
+                  <span class="story-username">chloe_reads</span>
+                </div>
+              </section>
+
+              <!-- Feed Posts Section -->
+              <section class="posts-container" id="feed-posts">
+                
+                <!-- Post Card 1 -->
+                <article class="post-card" data-post-id="1">
+                  <!-- Post Header -->
+                  <div class="post-header">
+                    <div class="post-user-info">
+                      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80" alt="sarah_jones">
+                      <div>
+                        <a href="#" class="username">sarah_jones</a>
+                        <span class="post-time">2h</span>
+                      </div>
+                    </div>
+                    <button class="post-menu" aria-label="More Options">
+                      <svg viewBox="0 0 24 24" width="24" height="24">
+                        <circle cx="12" cy="12" r="1.5"></circle>
+                        <circle cx="6" cy="12" r="1.5"></circle>
+                        <circle cx="18" cy="12" r="1.5"></circle>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <!-- Post Image (Double click to like) -->
+                  <div class="post-media-container">
+                    <img src="https://images.unsplash.com/photo-1472214222541-d510753a4907?w=600&auto=format&fit=crop&q=80" alt="Scenic mountains at sunset" class="post-photo">
+                    <div class="like-heart-popup">
+                      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </div>
+                  </div>
+
+                  <!-- Action Icons bar -->
+                  <div class="post-actions">
+                    <div class="left-actions">
+                      <button class="action-btn like-btn" aria-label="Like Post">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                      </button>
+                      <button class="action-btn comment-focus-btn" aria-label="Comment on Post">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                        </svg>
+                      </button>
+                      <button class="action-btn" aria-label="Share Post">
+                        <svg viewBox="0 0 24 24">
+                          <line x1="22" y1="2" x2="11" y2="13"/>
+                          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                        </svg>
+                      </button>
+                    </div>
+                    <button class="action-btn bookmark-btn" aria-label="Bookmark Post">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <!-- Details -->
+                  <div class="post-details">
+                    <div class="likes-count"><span>1,245</span> likes</div>
+                    <div class="post-caption">
+                      <a href="#" class="username">sarah_jones</a>
+                      <span>Chasing golden hours in the alpine valleys! ⛰️🌅</span>
+                    </div>
+                    <div class="view-comments-btn" id="toggle-comments-1">View all 14 comments</div>
+                    <div class="post-comment-list" id="comments-1">
+                      <div class="comment-item">
+                        <a href="#" class="username">travel_dan</a>
+                        <span>Absolutely breathtaking composition!</span>
+                      </div>
+                      <div class="comment-item">
+                        <a href="#" class="username">nature_lens</a>
+                        <span>Which camera model did you use for this?</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Comment input box -->
+                  <form class="post-comment-box">
+                    <svg viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                      <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                      <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                    </svg>
+                    <input type="text" placeholder="Add a comment..." class="comment-input" required>
+                    <button type="submit" class="post-comment-submit">Post</button>
+                  </form>
+                </article>
+
+
+                <!-- Post Card 2 -->
+                <article class="post-card" data-post-id="2">
+                  <!-- Post Header -->
+                  <div class="post-header">
+                    <div class="post-user-info">
+                      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" alt="travel_dan">
+                      <div>
+                        <a href="#" class="username">travel_dan</a>
+                        <span class="post-time">5h</span>
+                      </div>
+                    </div>
+                    <button class="post-menu" aria-label="More Options">
+                      <svg viewBox="0 0 24 24" width="24" height="24">
+                        <circle cx="12" cy="12" r="1.5"></circle>
+                        <circle cx="6" cy="12" r="1.5"></circle>
+                        <circle cx="18" cy="12" r="1.5"></circle>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <!-- Post Image (Double click to like) -->
+                  <div class="post-media-container">
+                    <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&auto=format&fit=crop&q=80" alt="Valley view" class="post-photo">
+                    <div class="like-heart-popup">
+                      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </div>
+                  </div>
+
+                  <!-- Action Icons bar -->
+                  <div class="post-actions">
+                    <div class="left-actions">
+                      <button class="action-btn like-btn" aria-label="Like Post">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                      </button>
+                      <button class="action-btn comment-focus-btn" aria-label="Comment on Post">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                        </svg>
+                      </button>
+                      <button class="action-btn" aria-label="Share Post">
+                        <svg viewBox="0 0 24 24">
+                          <line x1="22" y1="2" x2="11" y2="13"/>
+                          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                        </svg>
+                      </button>
+                    </div>
+                    <button class="action-btn bookmark-btn" aria-label="Bookmark Post">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <!-- Details -->
+                  <div class="post-details">
+                    <div class="likes-count"><span>856</span> likes</div>
+                    <div class="post-caption">
+                      <a href="#" class="username">travel_dan</a>
+                      <span>Lost in the green fields of Switzerland. Nature never fails to amaze. 🇨🇭💚</span>
+                    </div>
+                    <div class="view-comments-btn" id="toggle-comments-2">View all 8 comments</div>
+                    <div class="post-comment-list" id="comments-2">
+                      <div class="comment-item">
+                        <a href="#" class="username">sarah_jones</a>
+                        <span>Add this to my bucket list immediately!</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Comment input box -->
+                  <form class="post-comment-box">
+                    <svg viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                      <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                      <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                    </svg>
+                    <input type="text" placeholder="Add a comment..." class="comment-input" required>
+                    <button type="submit" class="post-comment-submit">Post</button>
+                  </form>
+                </article>
+
+              </section>
+
+            </main>
+
+            <!-- 4. SUGGESTIONS SIDEBAR (Visible on Desktop only) -->
+            <aside class="feed-sidebar">
+              <!-- Current User Profile Header -->
+              <div class="sidebar-user-profile">
+                <div class="user-info">
+                  <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" alt="karthik_2509">
+                  <div class="username-wrap">
+                    <span class="username">karthik_2509</span>
+                    <span class="fullname">Karthik Raja</span>
+                  </div>
+                </div>
+                <button class="switch-btn">Switch</button>
+              </div>
+
+              <!-- Suggestions Card -->
+              <div class="sidebar-suggestions-card">
+                <div class="suggestions-header">
+                  <span>Suggested for you</span>
+                  <a href="#" class="see-all">See All</a>
+                </div>
+
+                <div class="suggestions-list">
+                  
+                  <div class="suggestion-item">
+                    <div class="suggestion-user-info">
+                      <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80" alt="dave_codes">
+                      <div class="username-wrap">
+                        <span class="username">dave_codes</span>
+                        <span class="relation">Followed by sarah_jones + 2 more</span>
+                      </div>
+                    </div>
+                    <button class="follow-btn">Follow</button>
+                  </div>
+
+                  <div class="suggestion-item">
+                    <div class="suggestion-user-info">
+                      <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80" alt="pixel_architect">
+                      <div class="username-wrap">
+                        <span class="username">pixel_architect</span>
+                        <span class="relation">Popular near you</span>
+                      </div>
+                    </div>
+                    <button class="follow-btn">Follow</button>
+                  </div>
+
+                  <div class="suggestion-item">
+                    <div class="suggestion-user-info">
+                      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="sophia_adams">
+                      <div class="username-wrap">
+                        <span class="username">sophia_adams</span>
+                        <span class="relation">Followed by travel_dan</span>
+                      </div>
+                    </div>
+                    <button class="follow-btn">Follow</button>
+                  </div>
+
+                  <div class="suggestion-item">
+                    <div class="suggestion-user-info">
+                      <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80" alt="creative_studio">
+                      <div class="username-wrap">
+                        <span class="username">creative_studio</span>
+                        <span class="relation">New to Instagram</span>
+                      </div>
+                    </div>
+                    <button class="follow-btn">Follow</button>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Sidebar small footer -->
+              <footer class="sidebar-footer">
+                <div class="sidebar-footer-links">
+                  <a href="#">About</a>
+                  <a href="#">Help</a>
+                  <a href="#">Press</a>
+                  <a href="#">API</a>
+                  <a href="#">Jobs</a>
+                  <a href="#">Privacy</a>
+                  <a href="#">Terms</a>
+                  <a href="#">Locations</a>
+                  <a href="#">Language</a>
+                  <a href="#">Meta Verified</a>
+                </div>
+                <div class="sidebar-copyright">
+                  © 2026 INSTAGRAM FROM META CLONE
+                </div>
+              </footer>
+
+            </aside>
+
+          </div>
+        </div>
+
+        <!-- 5. MOBILE BOTTOM NAVIGATION BAR (Visible on Mobile only) -->
+        <nav class="mobile-bottom-nav">
+          <a href="#" class="nav-item-mobile active">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9.005 16.545a2.997 2.997 0 0 1 2.997-2.997h.001a2.997 2.997 0 0 1 2.997 2.997v5.455H9.005v-5.455zM21 22.002V12c0-.528-.21-.99-.582-1.353l-7.5-7.5a1.205 1.205 0 0 0-1.705 0l-7.5 7.5C3.336 11 3.126 11.472 3.126 12v10.002H7.5V16.54c0-2.483 2.012-4.495 4.495-4.495h.01a4.495 4.495 0 0 1 4.495 4.495v5.462H21z"/>
+            </svg>
+          </a>
+          <a href="#">
+            <svg viewBox="0 0 24 24">
+              <path d="M19 10.5A8.5 8.5 0 1 1 10.5 2a8.5 8.5 0 0 1 8.5 8.5z"/>
+              <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+            </svg>
+          </a>
+          <a href="#">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <line x1="12" y1="8" x2="12" y2="16"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+          </a>
+          <a href="#">
+            <svg viewBox="0 0 24 24">
+              <polygon points="12 2 2 22 22 22" stroke-linejoin="round"/>
+              <circle cx="12" cy="14" r="3"/>
+            </svg>
+          </a>
+          <a href="#">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" class="user-avatar" alt="My Profile">
+          </a>
+        </nav>
+
+      </div>
+    </div>
+
+
+    <!-- ==========================================================================
+         SHARED RESPONSIVE FOOTER (Only for Logged-Out Landing Screen)
+         ========================================================================== -->
+    <footer class="site-footer" id="global-footer">
+      <div class="footer-links">
+        <a href="#">Meta</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Jobs</a>
+        <a href="#">Help</a>
+        <a href="#">API</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Locations</a>
+        <a href="#">Instagram Lite</a>
+        <a href="#">Threads</a>
+        <a href="#">Contact Uploading & Non-Users</a>
+        <a href="#">Meta Verified</a>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="language-selector-wrap">
+          <select id="lang-select" aria-label="Change Display Language">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="it">Italiano</option>
+            <option value="de">Deutsch</option>
+            <option value="pt">Português</option>
+            <option value="ja">日本語</option>
+          </select>
+        </div>
+        <div class="copyright">
+          © 2026 Instagram from Meta Clone
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1352 @@
+/* ==========================================================================
+   Instagram Clone Design System & Layouts
+   ========================================================================== */
+
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+/* --- Root & Theme Variables --- */
+:root {
+  /* Brand Colors */
+  --insta-blue: #0095f6;
+  --insta-blue-hover: #1877f2;
+  --insta-blue-disabled: rgba(0, 149, 246, 0.3);
+  --insta-link: #00376b;
+  --insta-gray: #737373;
+  --insta-light-gray: #a8a8a8;
+  --insta-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  --fb-blue: #385185;
+
+  /* Font Families */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-logo: 'Outfit', sans-serif; /* Stylish fallback or clean branding */
+
+  /* Light Theme (Default) */
+  --bg-body: #fafafa;
+  --bg-card: #ffffff;
+  --bg-input: #fafafa;
+  --border-primary: #dbdbdb;
+  --border-secondary: #efefef;
+  --text-primary: #262626;
+  --text-secondary: #737373;
+  --text-accent: #0095f6;
+  --nav-hover: #f2f2f2;
+  --overlay-bg: rgba(0, 0, 0, 0.05);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease-in-out;
+  --transition-normal: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* --- Dark Theme --- */
+body.dark-mode {
+  --bg-body: #000000;
+  --bg-card: #121212;
+  --bg-input: #1c1c1c;
+  --border-primary: #262626;
+  --border-secondary: #1a1a1a;
+  --text-primary: #f5f5f5;
+  --text-secondary: #a8a8a8;
+  --text-accent: #0095f6;
+  --nav-hover: #1a1a1a;
+  --overlay-bg: rgba(255, 255, 255, 0.08);
+  --insta-link: #e0f1ff;
+  --fb-blue: #4f70b5;
+}
+
+/* --- Base & Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-size: 14px;
+  overflow-x: hidden;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+button {
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+}
+
+input {
+  font-family: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* --- Main Layout Wrapper --- */
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* ==========================================================================
+   Utility Classes & Components
+   ========================================================================== */
+
+/* Theme Toggle Button (Sleek Floating Control) */
+.theme-toggle-btn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  background-color: var(--nav-hover);
+}
+
+.theme-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.theme-toggle-btn .moon-icon {
+  display: none;
+}
+
+body.dark-mode .theme-toggle-btn .sun-icon {
+  display: none;
+}
+
+body.dark-mode .theme-toggle-btn .moon-icon {
+  display: block;
+}
+
+/* Hide elements depending on state */
+.state-container {
+  display: none;
+  width: 100%;
+}
+
+.state-container.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* ==========================================================================
+   1. LOGGED-OUT LOGIN PAGE LAYOUT
+   ========================================================================== */
+
+.auth-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 935px;
+  margin: 32px auto 0;
+  padding: 0 20px;
+}
+
+.auth-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  gap: 32px;
+  align-items: center;
+}
+
+@media (min-width: 876px) {
+  .auth-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+
+/* --- Mobile App Preview (Left side) --- */
+.preview-container {
+  display: none;
+  justify-content: flex-end;
+  position: relative;
+  height: 580px;
+}
+
+@media (min-width: 876px) {
+  .preview-container {
+    display: flex;
+  }
+}
+
+.phone-mockup {
+  width: 280px;
+  height: 570px;
+  background-color: #000;
+  border: 12px solid #1c1c1e;
+  border-radius: 40px;
+  position: relative;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2), 
+              0 6px 12px rgba(0, 0, 0, 0.15),
+              inset 0 0 2px 2px rgba(255, 255, 255, 0.1);
+  outline: 2px solid #3a3a3c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Speaker Notch / Dynamic Island */
+.phone-mockup::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 18px;
+  background-color: #000000;
+  border-radius: 10px;
+  z-index: 20;
+  box-shadow: inset 0 0 2px rgba(255,255,255,0.2);
+}
+
+.slideshow-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #000;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+  object-fit: cover;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* --- Auth Card Form (Right side) --- */
+.auth-forms-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+.auth-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  padding: 10px 40px 25px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-container {
+  margin: 36px 0 12px;
+  display: flex;
+  justify-content: center;
+  color: var(--text-primary);
+}
+
+.logo-container svg {
+  width: 175px;
+  fill: currentColor;
+}
+
+/* Form Styles */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 24px;
+}
+
+.input-wrapper {
+  position: relative;
+  height: 38px;
+  width: 100%;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-primary);
+  border-radius: 3px;
+  transition: border-color var(--transition-fast);
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--text-secondary);
+}
+
+.input-wrapper input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  padding: 9px 8px 7px;
+  font-size: 12px;
+  color: var(--text-primary);
+  outline: none;
+}
+
+/* Floating Label effect */
+.input-wrapper label {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--text-secondary);
+  pointer-events: none;
+  transition: transform 0.15s ease-out, font-size 0.15s ease-out;
+  transform-origin: left top;
+}
+
+/* Trigger labels to shrink if input has value or is focused */
+.input-wrapper.active label,
+.input-wrapper input:focus + label {
+  transform: translateY(-90%) scale(0.8);
+  font-size: 10px;
+}
+
+.input-wrapper.active input {
+  padding: 14px 8px 2px;
+}
+
+.input-wrapper input:focus {
+  padding: 14px 8px 2px;
+}
+
+/* Password Toggle Button */
+.password-toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+  display: none;
+}
+
+.input-wrapper input:not(:placeholder-shown) ~ .password-toggle {
+  display: block;
+}
+
+/* Action Button */
+.btn-primary {
+  background-color: var(--insta-blue);
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 7px 16px;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-primary:not(:disabled):hover {
+  background-color: var(--insta-blue-hover);
+}
+
+.btn-primary:disabled {
+  background-color: var(--insta-blue-disabled);
+  cursor: not-allowed;
+}
+
+/* Form Loader Spinner */
+.spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Divider "OR" */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 10px 0 18px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--border-primary);
+}
+
+.divider span {
+  padding: 0 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+/* Alternative Login */
+.fb-login {
+  color: var(--fb-blue);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+
+.fb-login svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.forgot-password {
+  font-size: 12px;
+  color: var(--insta-link);
+  margin-top: 12px;
+}
+
+/* Sign Up Redirect Card */
+.redirect-card {
+  padding: 20px;
+  font-size: 14px;
+}
+
+.redirect-card a {
+  color: var(--insta-blue);
+  font-weight: 600;
+}
+
+/* Get App Badge Section */
+.get-app-container {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.get-app-container p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.badge-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.app-badge img {
+  height: 40px;
+  transition: transform var(--transition-fast);
+}
+
+.app-badge:hover img {
+  transform: scale(1.03);
+}
+
+/* ==========================================================================
+   2. LOGGED-IN MAIN FEED & NAVIGATION LAYOUT
+   ========================================================================== */
+
+.feed-section-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* --- Responsive Navigation Structure --- */
+
+/* Sidebar Navigation (Desktop and Tablet) */
+.side-nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 244px;
+  border-right: 1px solid var(--border-primary);
+  background-color: var(--bg-card);
+  padding: 8px 12px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 100;
+  transition: width var(--transition-fast);
+}
+
+/* Logo placement in Side Nav */
+.side-nav-logo {
+  padding: 25px 12px 35px;
+  display: block;
+}
+
+.side-nav-logo svg {
+  fill: var(--text-primary);
+  width: 103px;
+}
+
+.side-nav-logo .insta-icon {
+  display: none;
+  width: 24px;
+  height: 24px;
+}
+
+/* Nav Menu list */
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--text-primary);
+  font-weight: 400;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.nav-item:hover {
+  background-color: var(--nav-hover);
+  transform: translateX(4px);
+}
+
+.nav-item.active {
+  font-weight: 700;
+}
+
+.nav-item svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: var(--text-primary);
+  stroke-width: 2;
+  transition: transform var(--transition-fast);
+}
+
+.nav-item:hover svg {
+  transform: scale(1.05);
+}
+
+.nav-item .user-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-primary);
+}
+
+/* Side Nav Bottom - "More" */
+.side-nav-bottom {
+  border-top: 1px solid var(--border-secondary);
+  padding-top: 10px;
+}
+
+/* --- Mobile Navbars (hides side nav, displays top/bottom) --- */
+.mobile-top-nav {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-primary);
+  padding: 0 16px;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+}
+
+.mobile-top-logo svg {
+  fill: var(--text-primary);
+  width: 103px;
+  display: block;
+}
+
+.mobile-top-icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.mobile-top-icons svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--text-primary);
+  fill: none;
+  stroke-width: 2;
+}
+
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border-primary);
+  display: none;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 100;
+}
+
+.mobile-bottom-nav svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--text-primary);
+  fill: none;
+  stroke-width: 2;
+}
+
+.mobile-bottom-nav .user-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* --- Feed Grid Container (Feed + Sidebar) --- */
+.feed-content-wrapper {
+  margin-left: 244px; /* Side Nav width */
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  padding: 30px 20px;
+  max-width: 935px;
+  margin-right: auto;
+  margin-left: auto;
+  transition: margin var(--transition-fast);
+}
+
+.feed-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  gap: 32px;
+}
+
+@media (min-width: 992px) {
+  .feed-grid {
+    grid-template-columns: 630px 293px;
+  }
+}
+
+.main-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 630px;
+  width: 100%;
+}
+
+/* --- Stories Row (Horizontal scroll) --- */
+.stories-panel {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  -webkit-overflow-scrolling: touch;
+}
+
+.stories-panel::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari */
+}
+
+.story-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 66px;
+}
+
+.story-avatar-container {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  padding: 2.5px;
+  background: var(--insta-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.story-item:hover .story-avatar-container {
+  transform: scale(1.05);
+}
+
+.story-avatar-container img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bg-card);
+}
+
+.story-username {
+  font-size: 12px;
+  color: var(--text-primary);
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Post Card Component --- */
+.post-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+}
+
+.post-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.post-user-info img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  padding: 1.5px;
+  background: var(--insta-gradient);
+}
+
+.post-user-info .username {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.post-user-info .post-time {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.post-user-info .post-time::before {
+  content: "•";
+  margin: 0 4px;
+}
+
+.post-menu svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--text-primary);
+}
+
+/* Post Media Image & Container */
+.post-media-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+}
+
+.post-media-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+/* Heart Popup Animation (Double Click) */
+.like-heart-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 10;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.like-heart-popup svg {
+  fill: #ffffff;
+  width: 80px;
+  height: 80px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+.like-heart-popup.animate {
+  animation: heartPop 0.8s ease-in-out;
+}
+
+@keyframes heartPop {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  15% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.9; }
+  30% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  80% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+}
+
+/* Post Actions Toolbar */
+.post-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 8px;
+}
+
+.left-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.action-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--text-primary);
+  fill: none;
+  stroke-width: 2;
+  transition: transform 0.1s ease;
+}
+
+.action-btn:hover svg {
+  transform: scale(1.1);
+  color: var(--insta-gray);
+}
+
+.action-btn.liked svg {
+  fill: #ff3040;
+  stroke: #ff3040;
+  animation: heartPulse 0.3s linear;
+}
+
+.action-btn.bookmarked svg {
+  fill: var(--text-primary);
+  stroke: var(--text-primary);
+}
+
+@keyframes heartPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* Post Details (Likes, caption, comments) */
+.post-details {
+  padding: 0 16px 12px;
+}
+
+.likes-count {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.post-caption {
+  margin-bottom: 6px;
+}
+
+.post-caption .username {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.view-comments-btn {
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.post-comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.comment-item {
+  font-size: 14px;
+}
+
+.comment-item .username {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+/* Post Add Comment Form */
+.post-comment-box {
+  border-top: 1px solid var(--border-secondary);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.post-comment-box svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--text-primary);
+  fill: none;
+  stroke-width: 2;
+}
+
+.post-comment-box input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.post-comment-box input::placeholder {
+  color: var(--text-secondary);
+}
+
+.post-comment-submit {
+  color: var(--insta-blue);
+  font-weight: 600;
+  opacity: 0.4;
+  transition: opacity var(--transition-fast);
+}
+
+.post-comment-box input:not(:placeholder-shown) + .post-comment-submit {
+  opacity: 1;
+}
+
+/* --- Suggested Users Sidebar (Desktop Only) --- */
+.feed-sidebar {
+  display: none;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 16px;
+}
+
+@media (min-width: 992px) {
+  .feed-sidebar {
+    display: flex;
+  }
+}
+
+/* Sidebar User Header */
+.sidebar-user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sidebar-user-profile .user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-user-profile img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-primary);
+}
+
+.sidebar-user-profile .username-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-user-profile .username {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sidebar-user-profile .fullname {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.switch-btn {
+  color: var(--insta-blue);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* Sidebar Suggestions List */
+.sidebar-suggestions-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.suggestions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.suggestions-header span {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.suggestions-header .see-all {
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.suggestion-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.suggestion-user-info img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.suggestion-user-info .username-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestion-user-info .username {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.suggestion-user-info .relation {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.follow-btn {
+  color: var(--insta-blue);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* Sidebar footer */
+.sidebar-footer {
+  margin-top: 15px;
+}
+
+.sidebar-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.sidebar-footer-links a {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.sidebar-footer-links a::after {
+  content: "•";
+  margin-left: 4px;
+}
+
+.sidebar-footer-links a:last-child::after {
+  content: "";
+}
+
+.sidebar-copyright {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   3. SHARED RESPONSIVE FOOTER
+   ========================================================================== */
+
+.site-footer {
+  padding: 30px 20px 52px;
+  background-color: var(--bg-body);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 5;
+}
+
+.site-footer.logged-in {
+  display: none; /* Hide global footer when logged-in feed is active on desktop */
+}
+
+@media (min-width: 992px) {
+  .site-footer.logged-in {
+    display: none;
+  }
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 16px;
+  max-width: 1000px;
+}
+
+.footer-links a {
+  color: var(--text-secondary);
+  font-size: 12px;
+  transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.language-selector-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  position: relative;
+}
+
+.language-selector-wrap select {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+}
+
+/* ==========================================================================
+   4. RESPONSIVE BREAKPOINTS (MEDIA QUERIES)
+   ========================================================================== */
+
+/* --- Tablet Adaptations (max-width: 991px) --- */
+@media (max-width: 991px) {
+  .feed-content-wrapper {
+    max-width: 600px;
+    padding: 20px 0;
+  }
+
+  .side-nav {
+    width: 72px;
+    padding: 8px 0 20px;
+    align-items: center;
+  }
+
+  .side-nav-logo {
+    padding: 25px 0 35px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .side-nav-logo .insta-logo {
+    display: none;
+  }
+
+  .side-nav-logo .insta-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+
+  .nav-item {
+    justify-content: center;
+    padding: 12px 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+
+  .nav-item:hover {
+    transform: none;
+    background-color: var(--nav-hover);
+  }
+
+  .nav-item span {
+    display: none;
+  }
+
+  .side-nav-bottom {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .feed-content-wrapper {
+    margin-left: 72px;
+  }
+}
+
+/* --- Mobile Adaptations (max-width: 767px) --- */
+@media (max-width: 767px) {
+  .theme-toggle-btn {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Show Top & Bottom Navbars */
+  .mobile-top-nav {
+    display: flex;
+  }
+
+  .mobile-bottom-nav {
+    display: flex;
+  }
+
+  /* Hide Desktop Sidebar Nav */
+  .side-nav {
+    display: none;
+  }
+
+  /* Reset Margin */
+  .feed-content-wrapper {
+    margin-left: 0;
+    padding-top: 75px; /* Offset for Mobile Top Nav */
+    padding-bottom: 70px; /* Offset for Mobile Bottom Nav */
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .main-feed {
+    max-width: 100%;
+  }
+
+  .stories-panel {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding: 10px 16px;
+  }
+
+  .post-card {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .auth-section {
+    margin-top: 16px;
+    padding: 0 10px;
+  }
+
+  .auth-card {
+    background-color: transparent;
+    border: none;
+    padding: 10px 20px 25px;
+  }
+
+  .redirect-card {
+    background-color: transparent;
+    border: none;
+  }
+}
